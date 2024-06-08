@@ -3,21 +3,18 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Login from './views/Login';
 
 const App = () => {
-    return (
-        <Router>
-            <React.Fragment>
-            <Routes>
-                <Route 
-                path="/" 
-                element={<Login />}
-                />
-            </Routes>
-            </React.Fragment>
-        </Router>
-        // <>
-        //     <Login />
-        // </>
-    );
-    }
+  return (
+    <Router>
+      <React.Fragment>
+        <Routes>
+          <Route 
+            path="/" 
+            element={<Login />}
+          />
+        </Routes>
+      </React.Fragment>
+    </Router>
+  );
+}
 
 export default App;

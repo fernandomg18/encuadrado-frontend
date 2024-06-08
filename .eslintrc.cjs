@@ -1,3 +1,5 @@
+const { parser } = require("typescript-eslint");
+
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -8,11 +10,18 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: './tsconfig.json',
+  },
   plugins: ['react-refresh'],
   rules: {
+    'indent': ['error', 2],
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
+    'react/react-in-jsx-scope': 'off',
   },
 }
