@@ -7,7 +7,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { login } from "@/store/user/userSlice";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 const userData = {
@@ -21,7 +21,6 @@ const LoginCard = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
   const handleLogin = () => {

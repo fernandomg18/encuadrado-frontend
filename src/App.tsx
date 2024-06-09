@@ -1,7 +1,7 @@
+import Home from '@/views/Home';
+import Login from '@/views/Login';
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import Home from './views/Home';
-import Login from './views/Login';
 
 const App = () => {
   return (
