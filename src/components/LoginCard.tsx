@@ -5,23 +5,34 @@ import {
   CardFooter
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { login } from "@/store/user/userSlice";
 import { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 const userData = {
-  username: "admin",
-  password: "admin"
+  user: "admin",
+  password: "admin",
+  email: "admin@gmail.com",
+  token: "asdasdasd",
 }
 
 const LoginCard = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
-    if (username === userData.username && password === userData.password) {
-      console.log("Login successful");
+    if (username === userData.user && password === userData.password) {
+      const userDataStore = {
+        user: userData.user,
+        email: userData.email,
+        token: userData.token,
+        isLoggedIn: true,
+      };
+      dispatch(login(userDataStore));
       navigate('/home');
     } else {
       console.log("Login failed");
