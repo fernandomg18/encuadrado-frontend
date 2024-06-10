@@ -1,4 +1,4 @@
-# Encuadrado Backend (Prueba Técnica)
+# Encuadrado Frontend (Prueba Técnica)
 
 Hola! Soy Fernando Meneses y esta es mi solucion a la prueba técnica! Espero les guste.
 
