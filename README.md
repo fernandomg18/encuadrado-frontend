@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+# Encuadrado Backend (Prueba Técnica)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Hola! Soy Fernando Meneses y esta es mi solucion a la prueba técnica! Espero les guste.
 
-Currently, two official plugins are available:
+Este proyecto es una prueba técnica para Encuadrado. Aquí encontrarás todas las instrucciones necesarias para configurar y ejecutar el proyecto.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Requisitos previos
 
-## Expanding the ESLint configuration
+- Node.js
+- npm
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Configuración del proyecto
 
-- Configure the top-level `parserOptions` property like this:
+1. Clona el repositorio en tu máquina local usando `git clone https://github.com/fernandomg18/encuadrado-frontend`
+2. Navega hasta el directorio del proyecto usando `cd encuadrado-frontend`
+3. Instala todas las dependencias necesarias usando `npm install`
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Configuración de Variables de Entorno
+
+Este proyecto utiliza variables de entorno para configurar ciertos aspectos de la aplicación. Estas variables deben ser definidas en un archivo `.env` en la raíz del proyecto.
+
+Aquí hay un ejemplo de cómo debería verse tu archivo `.env`:
+
+```properties
+VITE_API_URL = https://example.com/url/de/la/api
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Por favor, asegúrate de reemplazar https://example.com/url/de/la/api con la URL de tu propia API si es diferente.
+
+
+## Ejecución del proyecto
+
+Para ejecutar el proyecto en tu entorno local, sigue estos pasos:
+
+1. Ejecuta `npm run dev` para iniciar el servidor de desarrollo. Esto debería abrir el proyecto en tu navegador predeterminado.
+2. Si deseas generar una versión de producción del proyecto, puedes ejecutar `npm run build`. Esto creará una carpeta `dist` o `build` en el directorio raíz del proyecto con los archivos necesarios para desplegar el proyecto en un servidor.
