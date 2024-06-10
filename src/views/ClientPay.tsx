@@ -15,9 +15,9 @@ const ClientPay = () => {
     const fetchAppointments = async () => {
       const response = await getAppointmentById(appointment_id)
       setAppointment(response)
+      setIsLoading(false)
     }
     fetchAppointments()
-    setIsLoading(false)
   }, [appointment_id])
 
   return (

@@ -7,13 +7,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { PaymentStatusSelectProps } from "@/types";
 
-interface PaymentStatusSelectProps {
-  status: string | undefined;
-  setStatus: (status: string) => void;
-}
-
-const PaymentStatusSelect = ({status, setStatus}: PaymentStatusSelectProps) => {
+const PaymentStatusSelect = ({setStatus}: PaymentStatusSelectProps) => {
   return (
     <Select onValueChange={setStatus}>
       <SelectTrigger className="w-full">

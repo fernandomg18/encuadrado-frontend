@@ -4,10 +4,12 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
+import { PaymentStatusCardProps } from "@/types";
 import { CircleCheck, CircleX } from "lucide-react";
 
-const PaymentStatusCard = (status) => {
-  const isSuccess = status.status === "successful";
+const PaymentStatusCard = ({ status }: PaymentStatusCardProps) => {
+  console.log(status);
+  const isSuccess = status === "successful";
   const color = isSuccess ? "text-green-500" : "text-red-600";
   const message = isSuccess ? "Successful Payment" : "Payment Failed";
   const description = isSuccess ? "You can now close this page" : "Sorry, there was a payment error";

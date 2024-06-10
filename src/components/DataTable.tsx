@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/table"
 import { getUserAppointments, updateAppointmentsToPaid } from "@/services/api"
 import { setAppointments } from "@/store/appointments/appointmentsSlice"
+import { Appointment, RootState } from "@/types"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -32,25 +33,25 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Input } from "./ui/input"
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData extends Appointment, TValue> {
   columns: ColumnDef<TData, TValue>[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends Appointment, TValue>({
   columns,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
-  const data = useSelector((state) => state.appointments.appointments);
-  const user = useSelector((state) => state.user.user);
+  const data = useSelector((state: RootState) => state.appointments.appointments);
+  const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
 
-
+  
   const table = useReactTable({
-    data,
-    columns,
+    data, // @ts-expect-error: Type 'ColumnDef<TData, TValue>[]' is not assignable to type 'ColumnDef<Appointment, any>[]'.
+    columns, 
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,

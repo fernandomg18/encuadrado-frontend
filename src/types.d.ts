@@ -14,3 +14,26 @@ export interface Appointment {
   date: string,
   user_id: string,
 }
+
+export interface User {
+  id: string,
+  email: string,
+  user: string,
+}
+
+export interface RootState {
+  appointments: {
+    appointments: Appointment[]; 
+  };
+  user: {
+    user: User;
+  };
+}
+
+export interface PaymentStatusCardProps {
+  status: string | undefined;
+}
+
+export interface PaymentStatusSelectProps {
+  setStatus: (status: string) => void;
+}

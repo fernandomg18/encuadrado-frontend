@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { createAppointment } from "@/services/api";
 import { appendAppointments } from "@/store/appointments/appointmentsSlice";
+import { RootState } from "@/types";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +25,7 @@ const NewAppointmentDialog = () => {
   const [amount, setAmount] = useState<string>()
   const [status, setStatus] = useState<string>()
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.user);
 
   const resetForm = () => {
     setDate(undefined)
@@ -107,7 +108,7 @@ const NewAppointmentDialog = () => {
               Status
             </Label>
             <div className="col-span-3">  
-              <PaymentStatusSelect status={status} setStatus={setStatus}/>
+              <PaymentStatusSelect setStatus={setStatus}/>
             </div>
           </div>
         </div>
