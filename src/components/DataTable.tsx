@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { getUserAppointments, updateAppointmentsToPaid } from "@/services/api"
 import { setAppointments } from "@/store/appointments/appointmentsSlice"
 import {
   ColumnDef,
@@ -43,6 +44,7 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
   const data = useSelector((state) => state.appointments.appointments);
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
 
@@ -68,21 +70,21 @@ export function DataTable<TData, TValue>({
   const { setPageSize } = table
 
   useEffect(() => {
-    setPageSize(5)
+    setPageSize(6)
   }, [setPageSize])
 
-  function updateSelectedRowsToPaid() {
+  async function updateSelectedRowsToPaid() {
     const selectedRows = table.getFilteredSelectedRowModel().rows;
-  
-    const updatedData = data.map(row => {
-      if (selectedRows.some(selectedRow => selectedRow.original.id === row.id)) {
-        return { ...row, status: 'paid' };
-      }
-      return row;
-    });
+    const appointmentIds = selectedRows.map(row => row.original.id);
 
-    dispatch(setAppointments(updatedData));
-    table.resetRowSelection();
+    try {
+      await updateAppointmentsToPaid(appointmentIds);
+      const updatedData = await getUserAppointments(user.id);
+      dispatch(setAppointments(updatedData));
+      table.resetRowSelection();
+    } catch (error) {
+      console.error('There has been a problem with your fetch operation:', error);
+    }
   }
 
   return (

@@ -8,16 +8,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Appointment } from "@/types"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, Copy, MoreHorizontal, SquareArrowOutUpRight } from "lucide-react"
-
-export type Appointment = {
-  id: string
-  amount: number
-  status: "pending" | "processing" | "paid" | "failed"
-  email: string
-  date: string
-}
 
 function getPaymentLink(appointment_id: string) {
   const currentUrl = window.location.href;

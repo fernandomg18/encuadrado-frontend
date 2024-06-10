@@ -45,6 +45,7 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ appointment }) => {
   const [expiresYear, setExpiresYear] = useState("");
   const [cvc, setCvc] = useState("");
   const navigate = useNavigate();
+  console.log(appointment);
 
   const changeAmount = (newCurrency: string) => {
     let newAmount;

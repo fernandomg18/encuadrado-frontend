@@ -8,10 +8,11 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog";
+import { createAppointment } from "@/services/api";
 import { appendAppointments } from "@/store/appointments/appointmentsSlice";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PaymentStatusSelect from "./PaymentStatusSelect";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -23,6 +24,7 @@ const NewAppointmentDialog = () => {
   const [amount, setAmount] = useState<string>()
   const [status, setStatus] = useState<string>()
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.user.user);
 
   const resetForm = () => {
     setDate(undefined)
@@ -31,7 +33,7 @@ const NewAppointmentDialog = () => {
     setStatus('')
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!date || !email || !amount || !status) {
       alert("Please fill all fields")
       return
@@ -40,10 +42,16 @@ const NewAppointmentDialog = () => {
       date: date.toISOString().split('T')[0],
       email,
       amount: parseInt(amount),
-      status
+      status,
+      user_id: user.id
     }
-    dispatch(appendAppointments(newAppointment))
-    resetForm()
+    try {
+      const response = await createAppointment(newAppointment);
+      dispatch(appendAppointments(response));
+      resetForm();
+    } catch (error) {
+      console.error('There has been a problem with your fetch operation:', error);
+    }
   }
 
   return (
@@ -54,7 +62,7 @@ const NewAppointmentDialog = () => {
           className="bg-gradient-to-br from-green-400 to-green-600 text-white hover:from-green-500 hover:to-green-700 hover:text-white ml-auto"
         >
           <Plus className="pr-1"/>
-          Add Appointment
+            Add Appointment
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -83,7 +91,7 @@ const NewAppointmentDialog = () => {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
-              Amount
+              Amount (CLP)
             </Label>
             <Input
               id="amount"

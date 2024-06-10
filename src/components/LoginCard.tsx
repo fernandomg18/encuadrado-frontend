@@ -10,33 +10,32 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
-const userData = {
-  user: "admin",
-  password: "admin",
-  email: "admin@gmail.com",
-  token: "asdasdasd",
-}
-
 const LoginCard = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogin = () => {
-    if (username === userData.user && password === userData.password) {
-      const userDataStore = {
-        user: userData.user,
-        email: userData.email,
-        token: userData.token,
-        isLoggedIn: true,
-      };
-      dispatch(login(userDataStore));
+  const handleLogin = async () => {
+    const response = await fetch(import.meta.env.VITE_API_URL + '/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        user: username, 
+        password: password 
+      })
+    });
+    if (response.ok) {
+      const userData = await response.json();
+      dispatch(login(userData));
       navigate('/home');
     } else {
-      console.log("Login failed");
+      console.error('Failed to login');
     }
-  }
+  };
+  
 
   return (
     <Card className="w-1/4 p-7 bg-gradient-to-br from-orange-500 to-orange-500 shadow-xl">
