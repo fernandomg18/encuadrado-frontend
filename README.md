@@ -27,10 +27,9 @@ VITE_API_URL = https://example.com/url/de/la/api
 
 Por favor, asegúrate de reemplazar https://example.com/url/de/la/api con la URL de tu propia API si es diferente.
 
-
 ## Ejecución del proyecto
 
 Para ejecutar el proyecto en tu entorno local, sigue estos pasos:
 
 1. Ejecuta `npm run dev` para iniciar el servidor de desarrollo. Esto debería abrir el proyecto en tu navegador predeterminado.
-2. Si deseas generar una versión de producción del proyecto, puedes ejecutar `npm run build`. Esto creará una carpeta `dist` o `build` en el directorio raíz del proyecto con los archivos necesarios para desplegar el proyecto en un servidor.
+2. Si deseas generar una versión de producción del proyecto, puedes ejecutar `npm run build`. Esto creará una carpeta `dist` en el directorio raíz del proyecto con los archivos necesarios para desplegar el proyecto en un servidor.
