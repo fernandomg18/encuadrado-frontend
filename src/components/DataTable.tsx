@@ -1,3 +1,4 @@
+import NewAppointmentDialog from "@/components/NewAppointmentDialog"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -13,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { setAppointments } from "@/store/appointments/appointmentsSlice"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -26,22 +28,23 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { Input } from "./ui/input"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
 }
 
 export function DataTable<TData, TValue>({
   columns,
-  data: initialData,
 }: DataTableProps<TData, TValue>) {
-  const [data, setData] = useState<TData[]>(initialData);
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
+  const data = useSelector((state) => state.appointments.appointments);
+  const dispatch = useDispatch();
+
 
   const table = useReactTable({
     data,
@@ -78,9 +81,11 @@ export function DataTable<TData, TValue>({
       return row;
     });
 
-    setData(updatedData);
+    dispatch(setAppointments(updatedData));
     table.resetRowSelection();
   }
+
+  
 
   return (
     <div>
@@ -93,10 +98,11 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+        <NewAppointmentDialog />
         <Button
           variant="outline"
           onClick={() => updateSelectedRowsToPaid()}
-          className="ml-auto"
+          className="ml-auto bg-gradient-to-r from-gray-500 to-gray-700 text-white hover:from-gray-600 hover:to-gray-800 hover:text-white"
           disabled={table.getFilteredSelectedRowModel().rows.length === 0}
         >
           Paid

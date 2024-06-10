@@ -20,7 +20,6 @@ export const userSlice = createSlice({
       state.user = userInitialState;
     },
   },
-  
 });
 
 export const { login, logout } = userSlice.actions;

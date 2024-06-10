@@ -1,7 +1,9 @@
-import { Payment, columns } from "../lib/paymentsColumns"
+import { setAppointments } from "@/store/appointments/appointmentsSlice"
+import { useDispatch } from "react-redux"
+import { Appointment, columns } from "../lib/AppointmentsColumns"
 import { DataTable } from "./DataTable"
 
-function getData(): Payment[] {
+function getData(): Appointment[] {
   return [
     {
       id: "728ed52f",
@@ -63,14 +65,17 @@ function getData(): Payment[] {
   ]
 }
 
-const PaymentsTable = () => {
+const AppointmentsTable = () => {
+  const dispatch = useDispatch()
+
   const data = getData()
+  dispatch(setAppointments(data))
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} />
     </div>
   )
 }
 
-export default PaymentsTable;
+export default AppointmentsTable;

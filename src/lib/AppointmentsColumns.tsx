@@ -11,7 +11,7 @@ import {
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
-export type Payment = {
+export type Appointment = {
   id: string
   amount: number
   status: "pending" | "processing" | "paid" | "failed"
@@ -19,7 +19,7 @@ export type Payment = {
   date: string
 }
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Appointment>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -121,7 +121,7 @@ export const columns: ColumnDef<Payment>[] = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-          Amount
+          Amount (CLP)
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
@@ -134,13 +134,13 @@ export const columns: ColumnDef<Payment>[] = [
         currency: "CLP",
       }).format(amount)
  
-      return <div className="text-right font-medium">{formatted}</div>
+      return <div className="text-right font-medium mr-8">{formatted}</div>
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original
+      const appointment = row.original
  
       return (
         <DropdownMenu>
@@ -153,19 +153,19 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(appointment.id)}
             >
-              Copy payment ID
+              Copy appointment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() =>
                 navigator.clipboard.writeText(
-                  `https://example.com/payments/${payment.id}`
+                  `https://example.com/payments/${appointment.id}`
                 )
               }
             >
-              Copy payment link
+              Copy appointment link
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

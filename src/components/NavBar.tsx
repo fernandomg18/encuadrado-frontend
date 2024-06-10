@@ -23,7 +23,7 @@ const NavBar = () => {
       <p className="text-white text-lg my-2">{user.user}</p>
       <Separator className="w-11/12"/>
 
-      <Button className="text-white mt-5 text-lg" variant="link">Scheduling</Button>
+      <Button className="text-white mt-5 text-lg" variant="link">Appointments</Button>
       <Button 
         className="text-white bottom-0 mb-10 absolute bg-gray-700 hover:bg-gray-800"
         onClick={handleLogout}

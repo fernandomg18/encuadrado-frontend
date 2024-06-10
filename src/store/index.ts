@@ -1,8 +1,10 @@
+import appointmentsReducer from '@/store/appointments/appointmentsSlice';
+import userReducer from '@/store/user/userSlice';
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './user/userSlice';
 
 export default configureStore({
   reducer: {
     user: userReducer,
+    appointments: appointmentsReducer,
   },
 });

@@ -1,3 +1,4 @@
+import ClientPay from '@/views/ClientPay';
 import Home from '@/views/Home';
 import Login from '@/views/Login';
 import React from 'react';
@@ -15,6 +16,14 @@ const App = () => {
           <Route
             path="/home"
             element={<Home />}
+          />
+          <Route 
+            path="/client-payment/:appointment_id" 
+            element={<ClientPay />}
+          />
+          <Route
+            path="*"
+            element={<div>Error 404: Not Found</div>}
           />
         </Routes>
       </React.Fragment>
