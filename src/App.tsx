@@ -1,6 +1,7 @@
 import ClientPay from '@/views/ClientPay';
 import Home from '@/views/Home';
 import Login from '@/views/Login';
+import PaymentStatus from '@/views/PaymentStatus';
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
@@ -20,6 +21,10 @@ const App = () => {
           <Route 
             path="/client-payment/:appointment_id" 
             element={<ClientPay />}
+          />
+          <Route
+            path="/payment-status/:status"
+            element={<PaymentStatus />}
           />
           <Route
             path="*"

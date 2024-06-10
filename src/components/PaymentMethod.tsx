@@ -20,6 +20,7 @@ import {
 import formatAmount from "@/lib/formatAmount"
 import { CreditCard, Wallet } from "lucide-react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 interface Appointment {
   id: string
@@ -38,6 +39,12 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ appointment }) => {
   const [amount, setAmount] = useState(appointment.amount);
   const [amountFormatted, setAmountFormatted] = useState(formatAmount(amount, "CLP"));
   const [paymentMethod, setPaymentMethod] = useState("credit");
+  const [name, setName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiresMonth, setExpiresMonth] = useState("");
+  const [expiresYear, setExpiresYear] = useState("");
+  const [cvc, setCvc] = useState("");
+  const navigate = useNavigate();
 
   const changeAmount = (newCurrency: string) => {
     let newAmount;
@@ -60,10 +67,31 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ appointment }) => {
     changeAmount(newCurrency);
   };
 
+  const handlePayButton = () => {
+    if (paymentMethod === "transfer") {
+      navigate('/payment-status/successful');
+      return;
+    }
+    if (!name || 
+        cardNumber.length !== 16 || 
+        !expiresMonth || 
+        !expiresYear || 
+        cvc.length !== 3) {
+      navigate('/payment-status/failed');
+    } else {
+      navigate('/payment-status/successful');
+    }
+  };
+
   return (
-    <Card className="w-1/4">
+    <Card className="w-5/12">
       <CardHeader>
-        <CardTitle>Encuadrado Payment Method</CardTitle>
+        <CardTitle>
+          <p className="text-sm mb-2">🔶encuadrado</p>
+          <p className="flex text-green-500">
+            Payment Method
+          </p>
+        </CardTitle>
         <CardDescription className="text-lg">
           Assigned email: {appointment.email}
         </CardDescription>
@@ -129,16 +157,25 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ appointment }) => {
           <>
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="First Last" />
+              <Input 
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)} 
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="number">Card number</Label>
-              <Input id="number" placeholder="" />
+              <Input id="number"
+                type="number"
+                value={cardNumber}
+                onChange={(e) => setCardNumber(e.target.value)}
+              />
             </div>
             <div className="grid grid-cols-3 gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="month">Expires</Label>
-                <Select>
+                <Select value={expiresMonth} onValueChange={setExpiresMonth} >
                   <SelectTrigger id="month">
                     <SelectValue placeholder="Month" />
                   </SelectTrigger>
@@ -160,7 +197,7 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ appointment }) => {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="year">Year</Label>
-                <Select>
+                <Select value={expiresYear} onValueChange={setExpiresYear}>
                   <SelectTrigger id="year">
                     <SelectValue placeholder="Year" />
                   </SelectTrigger>
@@ -175,7 +212,12 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ appointment }) => {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="cvc">CVC</Label>
-                <Input id="cvc" placeholder="CVC" />
+                <Input id="cvc" 
+                  placeholder="CVC"
+                  type="number"
+                  value={cvc}
+                  onChange={(e) => setCvc(e.target.value)} 
+                />
               </div>
             </div>
           </>
@@ -192,7 +234,7 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ appointment }) => {
         )}
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Pay</Button>
+        <Button className="w-full" onClick={handlePayButton}>Pay</Button>
       </CardFooter>
     </Card>
   )

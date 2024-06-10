@@ -85,8 +85,6 @@ export function DataTable<TData, TValue>({
     table.resetRowSelection();
   }
 
-  
-
   return (
     <div>
       <div className="flex items-center py-4">

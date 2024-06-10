@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, Copy, MoreHorizontal, SquareArrowOutUpRight } from "lucide-react"
 
 export type Appointment = {
   id: string
@@ -17,6 +17,13 @@ export type Appointment = {
   status: "pending" | "processing" | "paid" | "failed"
   email: string
   date: string
+}
+
+function getPaymentLink(appointment_id: string) {
+  const currentUrl = window.location.href;
+  const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/"));
+  const newUrl = `${baseUrl}/client-payment/${appointment_id}`;
+  return newUrl;
 }
 
 export const columns: ColumnDef<Appointment>[] = [
@@ -150,22 +157,30 @@ export const columns: ColumnDef<Appointment>[] = [
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(appointment.id)}
+              onClick={() => {
+                const url = getPaymentLink(appointment.id);
+                window.open(url, '_blank');
+              }}
             >
-              Copy appointment ID
+              Go to payment link <SquareArrowOutUpRight size={16} className="absolute right-2" />
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() =>
                 navigator.clipboard.writeText(
-                  `https://example.com/payments/${appointment.id}`
+                  getPaymentLink(appointment.id)
                 )
               }
             >
-              Copy appointment link
+              Copy payment link <Copy size={16} className="absolute right-2"/>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(appointment.id)}
+            >
+              Copy appointment ID <Copy size={16} className="absolute right-2"/>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
