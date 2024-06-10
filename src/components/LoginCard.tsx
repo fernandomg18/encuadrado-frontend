@@ -5,6 +5,7 @@ import {
   CardFooter
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { loginUser } from "@/services/api";
 import { login } from "@/store/user/userSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -13,30 +14,21 @@ import { useNavigate } from 'react-router-dom';
 const LoginCard = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
-    const response = await fetch(import.meta.env.VITE_API_URL + '/auth', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 
-        user: username, 
-        password: password 
-      })
-    });
-    if (response.ok) {
-      const userData = await response.json();
+    try {
+      const userData = await loginUser(username, password);
       dispatch(login(userData));
       navigate('/home');
-    } else {
-      console.error('Failed to login');
+    } catch (error) {
+      console.error('Failed to login:', error);
+      setError(true);
     }
   };
   
-
   return (
     <Card className="w-1/4 p-7 bg-gradient-to-br from-orange-500 to-orange-500 shadow-xl">
       <CardContent>
@@ -55,6 +47,7 @@ const LoginCard = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        {error && <p className="text-white text-sm mt-3">Invalid username or password</p>}
       </CardContent>
       <CardFooter>
         <Button 

@@ -8,7 +8,6 @@ import { PaymentStatusCardProps } from "@/types";
 import { CircleCheck, CircleX } from "lucide-react";
 
 const PaymentStatusCard = ({ status }: PaymentStatusCardProps) => {
-  console.log(status);
   const isSuccess = status === "successful";
   const color = isSuccess ? "text-green-500" : "text-red-600";
   const message = isSuccess ? "Successful Payment" : "Payment Failed";

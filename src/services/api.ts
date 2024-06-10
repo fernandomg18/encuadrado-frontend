@@ -1,7 +1,28 @@
 import { Appointment, newAppointment } from "@/types";
 
+const baseUrl = import.meta.env.VITE_API_URL;
+
+export async function loginUser(username: string, password: string) {
+  const response = await fetch(baseUrl + '/auth', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+      user: username, 
+      password: password 
+    })
+  });
+  if (response.ok) {
+    const userData = await response.json();
+    return userData;
+  } else {
+    throw new Error('Failed to login');
+  }
+}
+
 export async function getUserAppointments(user_id: string): Promise<Appointment[]> {
-  const response = await fetch(import.meta.env.VITE_API_URL + '/user/' + user_id + '/appointments' , {
+  const response = await fetch(baseUrl + '/user/' + user_id + '/appointments' , {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -17,7 +38,7 @@ export async function getUserAppointments(user_id: string): Promise<Appointment[
 }
 
 export async function updateAppointmentsToPaid(appointmentIds: string[]): Promise<void> {
-  const response = await fetch(import.meta.env.VITE_API_URL + '/appointment/to-paid', {
+  const response = await fetch(baseUrl + '/appointment/to-paid', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -31,7 +52,7 @@ export async function updateAppointmentsToPaid(appointmentIds: string[]): Promis
 }
 
 export async function createAppointment(newAppointment: newAppointment): Promise<Appointment> {
-  const response = await fetch(import.meta.env.VITE_API_URL + '/appointment', {
+  const response = await fetch(baseUrl + '/appointment', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -47,7 +68,7 @@ export async function createAppointment(newAppointment: newAppointment): Promise
 }
 
 export async function getAppointmentById(id: string | undefined): Promise<Appointment> {
-  const response = await fetch(import.meta.env.VITE_API_URL + '/appointment/' + id, {
+  const response = await fetch(baseUrl + '/appointment/' + id, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
